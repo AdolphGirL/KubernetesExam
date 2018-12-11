@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # 指定service name，在namespace中須為唯一
+  name: my-nginx-service
+# service規格
+spec:
+  # 指定service的label selector來比對pod的label
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      # container port
+      targetPort: 80
+      protocol: TCP

@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-volume
-  namaspace: default
+  namespace: default
   labels:
-  - name: pv-pod
+  - app: pv-pod
 spec:
   containers:
   - name: vp-tomcat
@@ -22,15 +22,15 @@ spec:
     - name: app-logs
       # 掛載到容器內的路徑
       mountPath: /logs
-volumes:
-- name: app-logs
-  # 表示為一個臨時性或者共享的空間，Pod掛點後，該資料夾也會被刪除
-  emptuDir: {}
-  # 掛載到主機的位置
-  hostPath:
-    path: /logdata
-    # this field is optional
-    # type: Directory
+  volumes:
+  - name: app-logs
+    # 表示為一個臨時性或者共享的空間，Pod掛點後，該資料夾也會被刪除
+    emptuDir: {}
+    # 掛載到主機的位置
+    hostPath:
+      path: /logdata
+      # this field is optional
+      # type: Directory
 
 
     

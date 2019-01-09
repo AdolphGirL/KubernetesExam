@@ -4,7 +4,7 @@ metadata:
   name: pod-volume
   namespace: default
   labels:
-  - app: pv-pod
+    app: pv-pod
 spec:
   containers:
   - name: vp-tomcat
@@ -13,24 +13,23 @@ spec:
     - containerPort: 8080
     volumeMounts:
     - name: app-logs
-      # 掛載到容器內的路徑
+      # 掛載到容器的位置
       mountPath: /usr/local/tomcat/logs
   - name: vp-busybox
     image: busybox
     command: ["sh","-c","tailf /logs/catalina*.log"]
     volumeMounts:
     - name: app-logs
-      # 掛載到容器內的路徑
+      # 掛載到容器的位置
       mountPath: /logs
   volumes:
   - name: app-logs
     # 表示為一個臨時性或者共享的空間，Pod掛點後，該資料夾也會被刪除
-    emptuDir: {}
+    emptyDir: {}
     # 掛載到主機的位置
-    hostPath:
-      path: /logdata
-      # this field is optional
-      # type: Directory
-
+    # hostPath:
+    #   path: /logdata
+    #   # this field is optional
+    #   type: Directory
 
     

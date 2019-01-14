@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hostpath
+  namespace: default
+  labels:
+    app: hp-pod
+spec:
+  containers:
+  - name: hp-busybox
+    image: busybox
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: app-logs
+      mountPath: /hp-data # 掛載到容器的位置
+  volumes: 
+  - name: app-logs
+    hostPath:
+      path: /data         # 主機的位置
+      type: Directory

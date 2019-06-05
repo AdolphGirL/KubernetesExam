@@ -1,0 +1,6 @@
+# sidecar - 將war包與tomcat分開，K8S上，部屬javaweb的解法(K8S官網提供的方式)
+# FOR 通過拷貝war包到共享的emptyDir volume方式，提供war給tomcat
+
+FROM busybox:latest
+ADD sample.war sample.war
+CMD "tail" "-f" "/dev/null"

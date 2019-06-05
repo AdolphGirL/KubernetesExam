@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-tczn
+  namespace: mssqlspace
+  labels:
+    app: tomcat-tczn-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat-tczn-label
+  template:
+    metadata:
+      name: tomcat-tczn-pod
+      namespace: mssqlspace
+      labels:
+        app: tomcat-tczn-label
+    spec:
+    #  terminationGracePeriodSeconds: 10
+      initContainers:
+      - image: adolphgirl/sample:v1
+        name: war
+        command:
+          - "cp"
+          - "/TCZN_Dev.war"
+          - "/app"
+        volumeMounts:
+        - mountPath: /app
+          name: app-volume
+      containers:
+      - image: adolphgirl/tomcat:8.5-dev
+        name: tomcat
+        volumeMounts:
+        - mountPath: /usr/local/tomcat/webapps
+          name: app-volume
+        ports:
+        - containerPort: 8080
+      volumes:
+      - name: app-volume
+        emptyDir: {}
